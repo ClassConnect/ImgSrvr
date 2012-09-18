@@ -44,8 +44,6 @@ class Task
 
 			#debugger
 
-			modelid = model[0]
-
 			origimg = Magick::ImageList.new
 
 			open(url) do |f|
@@ -65,7 +63,7 @@ class Task
 
 			#model = { :model => 'teacher', :modelid => modelid }
 
-			modelarr = ['teacher',modelid]
+			modelarr = ['teacher',model[0]]
 
 			#thumbs = [  :thumb_lg => task.avatar_thumb_lg.url.to_s,
 			#			:thumb_mg => task.avatar_thumb_mg.url.to_s,
@@ -216,11 +214,12 @@ class Task
 
 			GC.start
 
-		when 'document'
+		when 'croc'
+
+			#debugger
 
 			origimg = Magick::ImageList.new
 
-			# retrieve fullsize image from S3 store, read into an ImageList object
 			open(url) do |f|
 				origimg.from_blob(f.read)
 			end
@@ -264,6 +263,31 @@ class Task
 			origimg.destroy!
 
 			GC.start
+
+			modelarr = ['binder',model[0],model[1]]
+
+			#thumbs = [  :thumb_lg => task.avatar_thumb_lg.url.to_s,
+			#			:thumb_mg => task.avatar_thumb_mg.url.to_s,
+			#			:thumb_md => task.avatar_thumb_md.url.to_s,
+			#			:thumb_sm => task.avatar_thumb_sm.url.to_s ]
+
+			thumbarr = [  '',
+						task.img_thumb_lg.url.to_s,
+						task.img_thumb_sm.url.to_s ]
+
+			datahash = Digest::MD5.hexdigest(thumbarr.to_s + modelarr.to_s + TX_PRIVATE_KEY).to_s
+
+			#debugger		
+
+			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
+															:model => modelarr,
+															:thumbs => thumbarr })
+
+			if response['status']==0
+				raise "Failed! #{response}"
+			else
+				#Task.delay(run_at: 24.hours.from_now).delayed_delete(task.id.to_s)
+			end 
 
 		end
 	end
