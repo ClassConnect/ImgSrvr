@@ -79,9 +79,9 @@ class Task
 
 			#debugger		
 
-			response = RestClient.post('localhost:5000/mediaserver/thumbs',{ :datahash => datahash,
-																			 :model => modelarr,
-																			 :thumbs => thumbarr })
+			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
+															:model => modelarr,
+															:thumbs => thumbarr })
 
 			if response['status']==0
 				raise "Failed! #{response}"
@@ -90,6 +90,8 @@ class Task
 			end 
 			
 		when 'image'
+
+			debugger
 
 			origimg = Magick::ImageList.new
 
@@ -140,7 +142,34 @@ class Task
 
 			GC.start
 
+			modelarr = ['binder',model[0],model[1]]
+
+			#thumbs = [  :thumb_lg => task.avatar_thumb_lg.url.to_s,
+			#			:thumb_mg => task.avatar_thumb_mg.url.to_s,
+			#			:thumb_md => task.avatar_thumb_md.url.to_s,
+			#			:thumb_sm => task.avatar_thumb_sm.url.to_s ]
+
+			thumbarr = [task.img_contentview.url.to_s,
+						task.img_thumb_lg.url.to_s,
+						task.img_thumb_sm.url.to_s ]
+
+			datahash = Digest::MD5.hexdigest(thumbarr.to_s + modelarr.to_s + TX_PRIVATE_KEY).to_s
+
+			debugger		
+
+			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
+															:model => modelarr,
+															:thumbs => thumbarr })
+
+			if response['status']==0
+				raise "Failed! #{response}"
+			else
+				#Task.delay(run_at: 24.hours.from_now).delayed_delete(task.id.to_s)
+			end
+
 		when 'url'
+
+			#debugger
 
 			origimg = Magick::ImageList.new
 
@@ -182,7 +211,34 @@ class Task
 
 			GC.start
 
+			modelarr = ['binder',model[0],model[1]]
+
+			#thumbs = [  :thumb_lg => task.avatar_thumb_lg.url.to_s,
+			#			:thumb_mg => task.avatar_thumb_mg.url.to_s,
+			#			:thumb_md => task.avatar_thumb_md.url.to_s,
+			#			:thumb_sm => task.avatar_thumb_sm.url.to_s ]
+
+			thumbarr = [task.img_contentview.url.to_s,
+						task.img_thumb_lg.url.to_s,
+						task.img_thumb_sm.url.to_s ]
+
+			datahash = Digest::MD5.hexdigest(thumbarr.to_s + modelarr.to_s + TX_PRIVATE_KEY).to_s
+
+			#debugger		
+
+			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
+															:model => modelarr,
+															:thumbs => thumbarr })
+
+			if response['status']==0
+				raise "Failed! #{response}"
+			else
+				#Task.delay(run_at: 24.hours.from_now).delayed_delete(task.id.to_s)
+			end
+
 		when 'video'
+
+			#debugger
 
 			origimg = Magick::ImageList.new
 
@@ -214,6 +270,32 @@ class Task
 
 			GC.start
 
+			modelarr = ['binder',model[0],model[1]]
+
+			#thumbs = [  :thumb_lg => task.avatar_thumb_lg.url.to_s,
+			#			:thumb_mg => task.avatar_thumb_mg.url.to_s,
+			#			:thumb_md => task.avatar_thumb_md.url.to_s,
+			#			:thumb_sm => task.avatar_thumb_sm.url.to_s ]
+
+			thumbarr = [  '',
+						task.img_thumb_lg.url.to_s,
+						task.img_thumb_sm.url.to_s ]
+
+			datahash = Digest::MD5.hexdigest(thumbarr.to_s + modelarr.to_s + TX_PRIVATE_KEY).to_s
+
+			#debugger		
+
+			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
+															:model => modelarr,
+															:thumbs => thumbarr })
+
+			if response['status']==0
+				raise "Failed! #{response}"
+			else
+				#Task.delay(run_at: 24.hours.from_now).delayed_delete(task.id.to_s)
+			end 
+
+		# this is also used for smartnotebooks - no additional logic is needed
 		when 'croc'
 
 			#debugger
@@ -288,7 +370,6 @@ class Task
 			else
 				#Task.delay(run_at: 24.hours.from_now).delayed_delete(task.id.to_s)
 			end 
-
 		end
 	end
 end
