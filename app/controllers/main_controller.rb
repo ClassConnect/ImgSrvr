@@ -10,7 +10,7 @@ class MainController < ApplicationController
 	def test
 
 		respond_to do |format|
-			format.html { render :text => 'hello!' }
+			format.html { render :text => 'I love you!' }
 		end
 
 	end
@@ -39,7 +39,7 @@ class MainController < ApplicationController
 
 			respond_to do |format|
 				#format.html {render :text => "PARAMS: #{params.to_s}, taskid: #{task.id.to_s}" }
-				format.html { render :text => MultiJson.encode({ :status => 1 }) }
+				format.json { render :text => MultiJson.encode({ :status => 1 }) }
 			end
 		end
 	end
