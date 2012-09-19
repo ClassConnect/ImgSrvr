@@ -7,6 +7,13 @@ class MainController < ApplicationController
 
 	end
 
+	def test
+
+		respond_to do |format|
+			format.html { render :text => 'hello!' }
+		end
+
+	end
 
 	def routing
 

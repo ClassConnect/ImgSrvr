@@ -2,6 +2,7 @@ MediaServer::Application.routes.draw do
 
   root :to => 'main#default'
 
+  get 'test' => 'main#test'
   post '/api' => 'main#routing'
 
   # The priority is based upon order of creation:
