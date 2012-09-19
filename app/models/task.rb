@@ -91,7 +91,7 @@ class Task
 			
 		when 'image'
 
-			debugger
+			#debugger
 
 			origimg = Magick::ImageList.new
 
@@ -155,7 +155,7 @@ class Task
 
 			datahash = Digest::MD5.hexdigest(thumbarr.to_s + modelarr.to_s + TX_PRIVATE_KEY).to_s
 
-			debugger		
+			#debugger		
 
 			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
 															:model => modelarr,
