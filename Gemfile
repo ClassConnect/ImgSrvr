@@ -34,10 +34,12 @@ gem "fog", "~> 1.3.1"
 
 gem 'rest-client'
 
+gem 'thin'
+
 gem 'rmagick'
 gem 'mini_magick'
 
-gem 'debugger'
+#gem 'debugger', group: [:development, :test]
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
