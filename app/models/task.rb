@@ -39,6 +39,8 @@ class Task
 
 		task = Task.find(taskid.to_s)
 
+		#debugger
+
 		case imgclass
 		when 'avatar'
 
@@ -46,31 +48,24 @@ class Task
 
 			origimg = Magick::ImageList.new
 
-			open(url) do |f|
+			open(URI::encode(url)) do |f|
 				origimg.from_blob(f.read)
 			end
 
 			origimg.format = BLOB_FILETYPE
 
-			task.update_attributes( :avatar_thumb_lg => FilelessIO.new(origimg.resize_to_fill!(AVATAR_LDIM,AVATAR_LDIM).to_blob).set_filename("thumb_lg.png"))
+			task.update_attributes( :avatar_thumb_lg => FilelessIO.new(origimg.resize_to_fill!(AVATAR_LDIM, AVATAR_LDIM ).to_blob).set_filename("thumb_lg.png"))
 			task.update_attributes( :avatar_thumb_mg => FilelessIO.new(origimg.resize_to_fill!(AVATAR_MGDIM,AVATAR_MGDIM).to_blob).set_filename("thumb_mg.png"))
-			task.update_attributes( :avatar_thumb_md => FilelessIO.new(origimg.resize_to_fill!(AVATAR_MDIM,AVATAR_MDIM).to_blob).set_filename("thumb_md.png"))
-			task.update_attributes( :avatar_thumb_sm => FilelessIO.new(origimg.resize_to_fill!(AVATAR_SDIM,AVATAR_SDIM).to_blob).set_filename("thumb_sm.png"))
+			task.update_attributes( :avatar_thumb_md => FilelessIO.new(origimg.resize_to_fill!(AVATAR_MDIM, AVATAR_MDIM ).to_blob).set_filename("thumb_md.png"))
+			task.update_attributes( :avatar_thumb_sm => FilelessIO.new(origimg.resize_to_fill!(AVATAR_SDIM, AVATAR_SDIM ).to_blob).set_filename("thumb_sm.png"))
 	
 			origimg.destroy!
 
 			GC.start
 
-			#model = { :model => 'teacher', :modelid => modelid }
-
 			modelarr = ['teacher',model[0]]
 
-			#thumbs = [  :thumb_lg => task.avatar_thumb_lg.url.to_s,
-			#			:thumb_mg => task.avatar_thumb_mg.url.to_s,
-			#			:thumb_md => task.avatar_thumb_md.url.to_s,
-			#			:thumb_sm => task.avatar_thumb_sm.url.to_s ]
-
-			thumbarr = [  task.avatar_thumb_lg.url.to_s,
+			thumbarr = [task.avatar_thumb_lg.url.to_s,
 						task.avatar_thumb_mg.url.to_s,
 						task.avatar_thumb_md.url.to_s,
 						task.avatar_thumb_sm.url.to_s ]
@@ -125,12 +120,6 @@ class Task
 
 			GC.start
 
-			# stathash = task.imgstatus
-			# stathash['smart_thumb'] = false
-			# stathash['img_contentview']['generated'] = true
-			# stathash['img_thumb_lg']['generated'] = true
-			# stathash['img_thumb_sm']['generated'] = true
-
 			task.update_attributes(	:img_thumb_sm => FilelessIO.new(origimg.resize_to_fill!(STHUMB_W,STHUMB_H,Magick::CenterGravity).to_blob).set_filename(STHUMB_FILENAME))#,
 									#:imgstatus => stathash)
 
@@ -138,16 +127,9 @@ class Task
 
 			origimg.destroy!
 
-			#Rails.logger.debug "after destroy img: #{`ps -o rss= -p #{$$}`}"
-
 			GC.start
 
 			modelarr = ['binder',model[0],model[1]]
-
-			#thumbs = [  :thumb_lg => task.avatar_thumb_lg.url.to_s,
-			#			:thumb_mg => task.avatar_thumb_mg.url.to_s,
-			#			:thumb_md => task.avatar_thumb_md.url.to_s,
-			#			:thumb_sm => task.avatar_thumb_sm.url.to_s ]
 
 			thumbarr = [task.img_contentview.url.to_s,
 						task.img_thumb_lg.url.to_s,
@@ -164,7 +146,7 @@ class Task
 			if response['status']==0
 				raise "Failed! #{response}"
 			else
-				#Task.delay(run_at: 24.hours.from_now).delayed_delete(task.id.to_s)
+				Task.delay(run_at: 24.hours.from_now).delayed_delete(task.id.to_s)
 			end
 
 		when 'url'
@@ -199,11 +181,6 @@ class Task
 
 			GC.start
 
-			# stathash = task.imgstatus
-			# stathash['img_contentview']['generated'] = true
-			# stathash['img_thumb_lg']['generated'] = true
-			# stathash['img_thumb_sm']['generated'] = true
-
 			task.update_attributes(	:img_thumb_sm => FilelessIO.new(origimg.resize_to_fill!(STHUMB_W,STHUMB_H,Magick::NorthGravity).to_blob).set_filename(STHUMB_FILENAME))#,
 									#:imgstatus => stathash)
 
@@ -212,11 +189,6 @@ class Task
 			GC.start
 
 			modelarr = ['binder',model[0],model[1]]
-
-			#thumbs = [  :thumb_lg => task.avatar_thumb_lg.url.to_s,
-			#			:thumb_mg => task.avatar_thumb_mg.url.to_s,
-			#			:thumb_md => task.avatar_thumb_md.url.to_s,
-			#			:thumb_sm => task.avatar_thumb_sm.url.to_s ]
 
 			thumbarr = [task.img_contentview.url.to_s,
 						task.img_thumb_lg.url.to_s,
@@ -259,10 +231,6 @@ class Task
 
 			GC.start
 
-			# stathash = task.imgstatus
-			# stathash['img_thumb_lg']['generated'] = true
-			# stathash['img_thumb_sm']['generated'] = true
-
 			task.update_attributes(	:img_thumb_sm => FilelessIO.new(origimg.resize_to_fill!(STHUMB_W,STHUMB_H,Magick::CenterGravity).to_blob).set_filename(STHUMB_FILENAME))#,
 									#:imgstatus => stathash)
 
@@ -272,12 +240,7 @@ class Task
 
 			modelarr = ['binder',model[0],model[1]]
 
-			#thumbs = [  :thumb_lg => task.avatar_thumb_lg.url.to_s,
-			#			:thumb_mg => task.avatar_thumb_mg.url.to_s,
-			#			:thumb_md => task.avatar_thumb_md.url.to_s,
-			#			:thumb_sm => task.avatar_thumb_sm.url.to_s ]
-
-			thumbarr = [  '',
+			thumbarr = [  "void",
 						task.img_thumb_lg.url.to_s,
 						task.img_thumb_sm.url.to_s ]
 
@@ -353,7 +316,7 @@ class Task
 			#			:thumb_md => task.avatar_thumb_md.url.to_s,
 			#			:thumb_sm => task.avatar_thumb_sm.url.to_s ]
 
-			thumbarr = [  '',
+			thumbarr = [  "void",
 						task.img_thumb_lg.url.to_s,
 						task.img_thumb_sm.url.to_s ]
 
