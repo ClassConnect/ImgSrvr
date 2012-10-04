@@ -39,12 +39,12 @@ class Task
 
 		task = Task.find(taskid.to_s)
 
-		#debugger
+		#
 
 		case imgclass
 		when 'avatar'
 
-			#debugger
+			#
 
 			origimg = Magick::ImageList.new
 
@@ -72,7 +72,7 @@ class Task
 
 			datahash = Digest::MD5.hexdigest(thumbarr.to_s+modelarr.to_s+TX_PRIVATE_KEY).to_s
 
-			#debugger		
+			#		
 
 			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
 															:model => modelarr,
@@ -86,7 +86,7 @@ class Task
 			
 		when 'image'
 
-			#debugger
+			#
 
 			origimg = Magick::ImageList.new
 
@@ -137,7 +137,7 @@ class Task
 
 			datahash = Digest::MD5.hexdigest(thumbarr.to_s + modelarr.to_s + TX_PRIVATE_KEY).to_s
 
-			#debugger		
+			#		
 
 			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
 															:model => modelarr,
@@ -151,7 +151,7 @@ class Task
 
 		when 'url'
 
-			#debugger
+			#
 
 			origimg = Magick::ImageList.new
 
@@ -196,7 +196,7 @@ class Task
 
 			datahash = Digest::MD5.hexdigest(thumbarr.to_s + modelarr.to_s + TX_PRIVATE_KEY).to_s
 
-			#debugger		
+			#		
 
 			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
 															:model => modelarr,
@@ -210,7 +210,7 @@ class Task
 
 		when 'video'
 
-			#debugger
+			#
 
 			origimg = Magick::ImageList.new
 
@@ -246,7 +246,7 @@ class Task
 
 			datahash = Digest::MD5.hexdigest(thumbarr.to_s + modelarr.to_s + TX_PRIVATE_KEY).to_s
 
-			#debugger		
+			#		
 
 			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
 															:model => modelarr,
@@ -261,7 +261,7 @@ class Task
 		# this is also used for smartnotebooks - no additional logic is needed
 		when 'croc'
 
-			#debugger
+			#
 
 			origimg = Magick::ImageList.new
 
@@ -322,7 +322,7 @@ class Task
 
 			datahash = Digest::MD5.hexdigest(thumbarr.to_s + modelarr.to_s + TX_PRIVATE_KEY).to_s
 
-			#debugger		
+			#		
 
 			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
 															:model => modelarr,

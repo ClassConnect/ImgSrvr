@@ -39,7 +39,7 @@ gem 'thin'
 gem 'rmagick'
 gem 'mini_magick'
 
-gem 'debugger'#, group: [:development, :test]
+#gem 'debugger'#, group: [:development, :test]
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
