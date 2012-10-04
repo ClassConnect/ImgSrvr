@@ -117,3 +117,5 @@ else
 	MEDIASERVER_API_URL = '184.73.195.113/api'
 	APPSERVER_API_URL = 'http://claco.com/mediaserver/thumbs'
 end
+
+SERVER_BOOT_TIME = Time.now

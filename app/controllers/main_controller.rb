@@ -9,9 +9,11 @@ class MainController < ApplicationController
 
 	def test
 
-		respond_to do |format|
-			format.html { render :text => 'I love you!' }
-		end
+		render 'main/status'
+
+		# respond_to do |format|
+		# 	format.html { render :text => 'I love you!' }
+		# end
 
 	end
 
