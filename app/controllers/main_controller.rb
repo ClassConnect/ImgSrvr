@@ -39,7 +39,11 @@ class MainController < ApplicationController
 
 			task.update_attributes(:storedir => params[:storedir].to_s)
 
-			Task.delay.processing(task.id.to_s,params[:class],params[:url],params[:model])
+			if !params[:origin].nil? && params[:origin]==true
+				Task.delay.processing(task.id.to_s,params[:class],params[:url],params[:model],STAGINGSERVER_API_URL)
+			else
+				Task.delay.processing(task.id.to_s,params[:class],params[:url],params[:model],APPSERVER_API_URL)
+			end
 
 			respond_to do |format|
 				#format.html {render :text => "PARAMS: #{params.to_s}, taskid: #{task.id.to_s}" }

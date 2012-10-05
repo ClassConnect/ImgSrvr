@@ -116,6 +116,7 @@ if Rails.env == "development"
 else
 	MEDIASERVER_API_URL = '184.73.195.113/api'
 	APPSERVER_API_URL = 'http://claco.com/mediaserver/thumbs'
+	STAGINGSERVER_API_URL = 'http://dragonrider.claco.com/mediaserver/thumbs'
 end
 
 SERVER_BOOT_TIME = Time.now

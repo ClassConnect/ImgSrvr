@@ -35,7 +35,7 @@ class Task
 
 	end
 
-	def self.processing(taskid,imgclass,url,model)
+	def self.processing(taskid,imgclass,url,model,destination)
 
 		task = Task.find(taskid.to_s)
 
@@ -74,7 +74,7 @@ class Task
 
 			#		
 
-			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
+			response = RestClient.post(destination,{ 	:datahash => datahash,
 															:model => modelarr,
 															:thumbs => thumbarr })
 
@@ -139,7 +139,7 @@ class Task
 
 			#		
 
-			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
+			response = RestClient.post(destination,{ 	:datahash => datahash,
 															:model => modelarr,
 															:thumbs => thumbarr })
 
@@ -198,7 +198,7 @@ class Task
 
 			#		
 
-			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
+			response = RestClient.post(destination,{ 	:datahash => datahash,
 															:model => modelarr,
 															:thumbs => thumbarr })
 
@@ -246,11 +246,9 @@ class Task
 
 			datahash = Digest::MD5.hexdigest(thumbarr.to_s + modelarr.to_s + TX_PRIVATE_KEY).to_s
 
-			#		
-
-			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
-															:model => modelarr,
-															:thumbs => thumbarr })
+			response = RestClient.post(destination,{:datahash => datahash,
+													:model => modelarr,
+													:thumbs => thumbarr })
 
 			if response['status']==0
 				raise "Failed! #{response}"
@@ -324,7 +322,7 @@ class Task
 
 			#		
 
-			response = RestClient.post(APPSERVER_API_URL,{ 	:datahash => datahash,
+			response = RestClient.post(destination,{ 	:datahash => datahash,
 															:model => modelarr,
 															:thumbs => thumbarr })
 
