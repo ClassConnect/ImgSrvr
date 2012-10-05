@@ -2,4 +2,6 @@ Server is running!
 <br />
 Server booted at <%= SERVER_BOOT_TIME %>
 <br />
+Server has been running for <%= "#{@days} days, #{@hours} hours, #{@minutes} minutes, #{@seconds} seconds" %>
+<br />
 Number of tasks in database: <%= Task.all.size %>

@@ -9,6 +9,13 @@ class MainController < ApplicationController
 
 	def test
 
+		@time = Time.now.to_f - SERVER_BOOT_TIME.to_f
+		@seconds = "%.3f"%(@time%60) 
+		@time = @time.to_i
+		@minutes = (@time%3600-@seconds.to_i)/60 
+		@hours = (@time%86400-@minutes-@seconds.to_i)/3600 
+		@days = (@time-@hours-@minutes-@seconds.to_i)/86400 
+		
 		render 'main/status'
 
 		# respond_to do |format|
