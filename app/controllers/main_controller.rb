@@ -9,8 +9,6 @@ class MainController < ApplicationController
 
 	def test
 
-		debugger
-
 		render 'main/status'
 
 		# respond_to do |format|
