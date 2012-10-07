@@ -12,6 +12,8 @@ class Task
 
 	field :storedir, :type => String
 
+	field :status, :type => Hash, :default => {}
+
 	mount_uploader :img_contentview, ImageUploader
 	mount_uploader :img_thumb_lg, ImageUploader
 	mount_uploader :img_thumb_sm, ImageUploader
@@ -39,7 +41,7 @@ class Task
 
 		task = Task.find(taskid.to_s)
 
-		#
+		debugger
 
 		case imgclass
 		when 'avatar'
@@ -74,9 +76,9 @@ class Task
 
 			#		
 
-			response = RestClient.post(destination,{ 	:datahash => datahash,
-															:model => modelarr,
-															:thumbs => thumbarr })
+			response = RestClient.post(destination,{:datahash 	=> datahash,
+													:model 		=> modelarr,
+													:thumbs 	=> thumbarr })
 
 			if response['status']==0
 				raise "Failed! #{response}"
@@ -139,9 +141,9 @@ class Task
 
 			#		
 
-			response = RestClient.post(destination,{ 	:datahash => datahash,
-															:model => modelarr,
-															:thumbs => thumbarr })
+			response = RestClient.post(destination,{:datahash 	=> datahash,
+													:model 		=> modelarr,
+													:thumbs 	=> thumbarr })
 
 			if response['status']==0
 				raise "Failed! #{response}"

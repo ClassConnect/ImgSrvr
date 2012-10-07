@@ -29,6 +29,8 @@ class MainController < ApplicationController
 		#Task.delay(run_at: 10.seconds.from_now).test
 		errors = []
 
+		debugger
+
 		if !params[:storedir] || !params[:class] || !params[:url] || !params[:model] || !params[:datahash]
 			errors << 'Invalid parameter set'
 		elsif Digest::MD5.hexdigest(params[:storedir].to_s + params[:class].to_s + params[:url].to_s + params[:model].to_s + RX_PRIVATE_KEY).to_s != params[:datahash].to_s
