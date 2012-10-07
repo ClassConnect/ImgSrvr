@@ -1,5 +1,7 @@
 # config/initializers/constants.rb
 
+ENV['RAILS_ENV'] ||= 'production'
+
 # CROCODOC
 
 CROC_API_URL = "https://crocodoc.com/api/v2"
