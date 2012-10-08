@@ -41,6 +41,8 @@ gem 'mini_magick'
 
 gem 'debugger'#, group: [:development, :test]
 
+gem "daemons", "= 1.0.10"
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
