@@ -2,9 +2,17 @@
 <html>
 <head>
   <title>MediaServer</title>
+  <link rel="shortcut icon" href="#" />
+  <script type="text/JavaScript">
+	<!--
+	function timedRefresh(timeoutPeriod) {
+		setTimeout("location.reload(true);",timeoutPeriod);
+	}
+	//   -->
+  </script>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body onload="JavaScript:timedRefresh(1000);">
 
 <%= yield %>
 
