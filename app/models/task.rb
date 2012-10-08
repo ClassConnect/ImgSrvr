@@ -43,8 +43,6 @@ class Task
 
 		task = Task.find(taskid.to_s)
 
-		debugger
-
 		case imgclass
 		when 'avatar'
 
