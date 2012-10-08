@@ -1,5 +1,6 @@
 # config/initializers/constants.rb
 
+# this doesn't appear to work
 ENV['RAILS_ENV'] ||= 'production'
 
 # CROCODOC
