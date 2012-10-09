@@ -9,9 +9,11 @@ class MainController < ApplicationController
 
 	def test
 
-		@time = Time.now.to_f - SERVER_BOOT_TIME.to_f
-		@seconds = "%.3f"%(@time%60) 
-		@time = @time.to_i
+		#@time = Time.now.to_f - SERVER_BOOT_TIME.to_f
+		@time = Time.now.to_i - SERVER_BOOT_TIME.to_i
+		#@seconds = "%.3f"%(@time%60) 
+		@seconds = @time.to_i%60
+		#@time = @time.to_i
 		@minutes = (@time%3600-@seconds.to_i)/60 
 		@hours = (@time%86400-@minutes-@seconds.to_i)/3600 
 		@days = (@time-@hours-@minutes-@seconds.to_i)/86400 
@@ -21,6 +23,23 @@ class MainController < ApplicationController
 		# respond_to do |format|
 		# 	format.html { render :text => 'I love you!' }
 		# end
+
+	end
+
+	def time
+
+		#@time = Time.now.to_f - SERVER_BOOT_TIME.to_f
+		@time = Time.now.to_i - SERVER_BOOT_TIME.to_i
+		#@seconds = "%.3f"%(@time%60) 
+		#@time = @time.to_i
+		@seconds = @time.to_i%60
+		@minutes = (@time%3600-@seconds.to_i)/60 
+		@hours = (@time%86400-@minutes-@seconds.to_i)/3600 
+		@days = (@time-@hours-@minutes-@seconds.to_i)/86400 
+
+		respond_to do |format|
+			format.html {render :text => "#{@days} days, #{@hours} hours, #{@minutes} minutes, #{@seconds} seconds" }
+		end
 
 	end
 

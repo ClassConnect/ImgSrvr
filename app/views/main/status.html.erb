@@ -1,7 +1,8 @@
-Server is running!
+<h2>
+MediaServer is running!
 <br />
-Server booted at <%= SERVER_BOOT_TIME %>
-<br />
-Server has been running for <%= "#{@days} days, #{@hours} hours, #{@minutes} minutes, #{@seconds} seconds" %>
-<br />
+Server booted at <%= SERVER_BOOT_TIME %><br />
 Number of tasks in database: <%= Task.all.size %>
+<br />
+Server has been running for: <div id="time"><%= "#{@days} days, #{@hours} hours, #{@minutes} minutes, #{@seconds} seconds" %></div>
+</h2>
