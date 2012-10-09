@@ -43,6 +43,14 @@ class MainController < ApplicationController
 
 	end
 
+	def tasks
+
+		respond_to do |format|
+			format.html {render :text => "Tasks in database: #{Task.all.size.to_s}<br />Scheduled tasks: #{Task.where(:status=>1).size.to_s}<br />Completed tasks: #{Task.where(:status=>2).size.to_s}<br />Failed tasks: #{Task.where(:status=>3).size.to_s}" }
+		end
+
+	end
+
 	def routing
 
 		#Task.delay(run_at: 10.seconds.from_now).test
@@ -61,13 +69,16 @@ class MainController < ApplicationController
 		else
 			task = Task.new
 
-			task.update_attributes(:storedir => params[:storedir].to_s)
+			task.update_attributes(:storedir => params[:storedir].to_s,
+									:params => params)
 
 			if params[:origin]=="true"
 				Task.delay.processing(task.id.to_s,params[:class],params[:url],params[:model],STAGINGSERVER_API_URL)
 			else
 				Task.delay.processing(task.id.to_s,params[:class],params[:url],params[:model],APPSERVER_API_URL)
 			end
+
+			task.update_attributes(:status => 1)
 
 			respond_to do |format|
 				#format.html {render :text => "PARAMS: #{params.to_s}, taskid: #{task.id.to_s}" }

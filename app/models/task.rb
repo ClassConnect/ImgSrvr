@@ -12,7 +12,13 @@ class Task
 
 	field :storedir, :type => String
 
-	field :status, :type => Hash, :default => {}
+	# 0 - not scheduled, not completed
+	# 1 - scheduled, not completed
+	# 2 - completed
+	# 3 - error
+	field :status, :type => Integer, :default => 0
+
+	field :params, :type => Hash, :default => {}
 
 	mount_uploader :img_contentview, ImageUploader
 	mount_uploader :img_thumb_lg, ImageUploader
@@ -81,9 +87,11 @@ class Task
 													:thumbs 	=> thumbarr })
 
 			if response['status']==0
+				task.update_attributes(:status => 3)
 				raise "Failed! #{response}"
 			else
-				#Task.delay(run_at: 24.hours.from_now).delayed_delete(task.id.to_s)
+				task.update_attributes(:status => 2)
+				Task.delay(run_at: 24.hours.from_now).delayed_delete(task.id.to_s)
 			end 
 			
 		when 'image'

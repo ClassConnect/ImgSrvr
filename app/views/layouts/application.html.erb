@@ -19,8 +19,11 @@
     }
 	function inf() {
 		window.setInterval(function() {
-			document.getElementById('time').innerHTML = httpGet('/time')//http://localhost:5001
+			document.getElementById('time').innerHTML = httpGet('/time')
 		}, 1000)
+		window.setInterval(function() {
+			document.getElementById('tasks').innerHTML = httpGet('/tasks')
+		}, 5000)
 	}
 	//   -->
   </script>

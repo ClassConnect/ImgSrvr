@@ -4,6 +4,7 @@ MediaServer::Application.routes.draw do
 
   get 'test' => 'main#test'
   get 'time' => 'main#time'
+  get 'tasks' => 'main#tasks'
   post '/api' => 'main#routing'
 
   # The priority is based upon order of creation:
