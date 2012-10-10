@@ -39,8 +39,6 @@ class Task
 
 	def self.delayed_delete(id)
 
-		debugger
-
 		Task.find(id).delete
 
 	end
