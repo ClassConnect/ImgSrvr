@@ -75,22 +75,6 @@ class Task
 						task.avatar_thumb_mg.url.to_s,
 						task.avatar_thumb_md.url.to_s,
 						task.avatar_thumb_sm.url.to_s ]
-
-			datahash = Digest::MD5.hexdigest(thumbarr.to_s+modelarr.to_s+TX_PRIVATE_KEY).to_s
-
-			#		
-
-			response = RestClient.post(destination,{:datahash 	=> datahash,
-													:model 		=> modelarr,
-													:thumbs 	=> thumbarr })
-
-			if response['status']==0
-				task.update_attributes(:status => 3)
-				raise "Failed! #{response}"
-			else
-				task.update_attributes(:status => 2)
-				Task.delay(run_at: 24.hours.from_now).delayed_delete(task.id.to_s)
-			end 
 			
 		when 'image'
 
@@ -143,20 +127,6 @@ class Task
 						task.img_thumb_lg.url.to_s,
 						task.img_thumb_sm.url.to_s ]
 
-			datahash = Digest::MD5.hexdigest(thumbarr.to_s + modelarr.to_s + TX_PRIVATE_KEY).to_s
-
-			#		
-
-			response = RestClient.post(destination,{:datahash 	=> datahash,
-													:model 		=> modelarr,
-													:thumbs 	=> thumbarr })
-
-			if response['status']==0
-				raise "Failed! #{response}"
-			else
-				Task.delay(run_at: 24.hours.from_now).delayed_delete(task.id.to_s)
-			end
-
 		when 'url'
 
 			#
@@ -202,22 +172,6 @@ class Task
 						task.img_thumb_lg.url.to_s,
 						task.img_thumb_sm.url.to_s ]
 
-			datahash = Digest::MD5.hexdigest(thumbarr.to_s + modelarr.to_s + TX_PRIVATE_KEY).to_s
-
-			#		
-
-			#debugger
-
-			response = RestClient.post(destination,{:datahash => datahash,
-													:model => modelarr,
-													:thumbs => thumbarr })
-
-			if response['status']==0
-				raise "Failed! #{response}"
-			else
-				#Task.delay(run_at: 24.hours.from_now).delayed_delete(task.id.to_s)
-			end
-
 		when 'video'
 
 			#
@@ -253,18 +207,6 @@ class Task
 			thumbarr = [  "void",
 						task.img_thumb_lg.url.to_s,
 						task.img_thumb_sm.url.to_s ]
-
-			datahash = Digest::MD5.hexdigest(thumbarr.to_s + modelarr.to_s + TX_PRIVATE_KEY).to_s
-
-			response = RestClient.post(destination,{:datahash => datahash,
-													:model => modelarr,
-													:thumbs => thumbarr })
-
-			if response['status']==0
-				raise "Failed! #{response}"
-			else
-				#Task.delay(run_at: 24.hours.from_now).delayed_delete(task.id.to_s)
-			end 
 
 		# this is also used for smartnotebooks - no additional logic is needed
 		when 'croc'
@@ -328,19 +270,23 @@ class Task
 						task.img_thumb_lg.url.to_s,
 						task.img_thumb_sm.url.to_s ]
 
-			datahash = Digest::MD5.hexdigest(thumbarr.to_s + modelarr.to_s + TX_PRIVATE_KEY).to_s
 
-			#		
 
-			response = RestClient.post(destination,{ 	:datahash => datahash,
-															:model => modelarr,
-															:thumbs => thumbarr })
-
-			if response['status']==0
-				raise "Failed! #{response}"
-			else
-				#Task.delay(run_at: 24.hours.from_now).delayed_delete(task.id.to_s)
-			end 
 		end
+
+		datahash = Digest::MD5.hexdigest(thumbarr.to_s + modelarr.to_s + TX_PRIVATE_KEY).to_s
+
+		response = RestClient.post(destination,{ 	:datahash => datahash,
+													:model => modelarr,
+													:thumbs => thumbarr })
+
+		if response['status']==0
+			task.update_attributes(:status => 3)
+			raise "Failed! #{response}"
+		else
+			task.update_attributes(:status => 2)
+			Task.delay(run_at: 24.hours.from_now).delayed_delete(task.id.to_s)
+		end 
+
 	end
 end
