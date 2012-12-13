@@ -94,7 +94,7 @@ class Task
 			
 		when 'image'
 
-			#
+			#TODO: migrate smart thumbnails into here
 
 			origimg = Magick::ImageList.new
 
@@ -206,9 +206,11 @@ class Task
 
 			#		
 
-			response = RestClient.post(destination,{ 	:datahash => datahash,
-															:model => modelarr,
-															:thumbs => thumbarr })
+			#debugger
+
+			response = RestClient.post(destination,{:datahash => datahash,
+													:model => modelarr,
+													:thumbs => thumbarr })
 
 			if response['status']==0
 				raise "Failed! #{response}"
